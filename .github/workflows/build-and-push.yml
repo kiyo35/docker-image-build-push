@@ -32,6 +32,6 @@ jobs:
           git clone https://github.com/${{ secrets.GITHUBUSER }}/app.git
           cd app/deploy
           yq e '.metadata.name = "gitops-deployment${{ github.run_number }}"' -i deployment.yaml
-          git add test.yaml
+          git add deployment.yaml
           git commit -m ${{ github.run_number }} -a
           git push origin main
