@@ -22,4 +22,15 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello:1.0.1
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello:latest
+
+      - name: Change Pod Name
+        run: |
+          git config --global user.email ${{ secrets.EMAIL }}
+          git config --global user.name ${{ secrets.GITHUBUSER }}
+          git clone https://github.com/${{ secrets.GITHUBUSER }}/app.git
+          cd deploy
+          yq e '.metadata.name = "gitops-deployment${{ github.run_number }}"' -i test.yaml
+          git add test.yaml
+          git commit -m ${{ github.run_number }} -a
+          git push origin main
