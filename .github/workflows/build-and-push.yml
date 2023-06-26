@@ -22,7 +22,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:1.0.1
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{ github.run_number }}
 
       - name: Change Pod Name
         run: |
@@ -31,7 +31,7 @@ jobs:
           git config --global user.name ${{ secrets.GITHUBUSER }}
           git clone https://github.com/${{ secrets.GITHUBUSER }}/app.git
           cd app/deploy
-          yq e '.metadata.name = "gitops-deployment${{ github.run_number }}"' -i deployment.yaml
+          yq e '.spec.template.spec.containers.image = "kiyo35/nginx:${{ github.run_number }}"' -i deployment.yaml
           git add deployment.yaml
           git commit -m ${{ github.run_number }} -a
           git push origin main
