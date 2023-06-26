@@ -24,14 +24,14 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:1.0.1
 
-#      - name: Change Pod Name
-#        run: |
-#          echo -e "machine github.com\nlogin ${{ secrets.GITHUBUSER }}\npassword ${{ secrets.GITHUBTOKEN }}" > ~/.netrc
-#          git config --global user.email ${{ secrets.EMAIL }}
-#          git config --global user.name ${{ secrets.GITHUBUSER }}
-#          git clone https://github.com/${{ secrets.GITHUBUSER }}/app.git
-#          cd app/deploy
-#          yq e '.metadata.name = "gitops-deployment${{ github.run_number }}"' -i deployment.yaml
-#          git add deployment.yaml
-#          git commit -m ${{ github.run_number }} -a
-#          git push origin main
+      - name: Change Pod Name
+        run: |
+        　echo -e "machine github.com\nlogin ${{ secrets.GITHUBUSER }}\npassword ${{ secrets.GITHUBTOKEN }}" > ~/.netrc
+          git config --global user.email ${{ secrets.EMAIL }}
+          git config --global user.name ${{ secrets.GITHUBUSER }}
+          git clone https://github.com/${{ secrets.GITHUBUSER }}/app.git
+          cd app/deploy
+          yq e '.metadata.name = "gitops-deployment${{ github.run_number }}"' -i deployment.yaml
+          git add deployment.yaml
+          git commit -m ${{ github.run_number }} -a
+          git push origin main
